@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Theory for task</title>
+    <link rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            height: calc(100vh - 45px);
+        }
+
+        header {
+            height: 45px;
+            background-color: #fff;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .logo {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+            }
+
+            .logo h1 {
+                margin: 0;
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile button {
+    background-image: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: 0.5s;
+    background-size: 200% auto;
+            box-shadow: 0 0 20px #eee;
+}
+
+.profile button:hover {
+            background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+}
+
+        .main-content {
+            display: flex;
+            padding: 20px;
+            height: 75vh; /* Высота всего окна минус высота header */
+
+        }
+
+        .tasks {
+            flex: 1;
+            padding-right: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            height: 87vh;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow-y: auto; /* Добавляем прокрутку, если содержимое слишком длинное */
+        }
+
+        .tasks h1 {
+            margin: 0;
+            padding-left: 10px;
+        }
+
+        .tasks p {
+        margin: 0;
+        }
+
+
+        .tasks pre {
+        font-size: 16px;
+        }
+
+        .tasks ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+
+        .tasks li {
+            margin-bottom: 20px;
+        }
+
+
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <h1>CodES</h1>
+    </div>
+    <div class="profile">
+        <button onclick="list()">К списку</button>
+    </div>
+</header>
+
+
+
+<div class="main-content">
+
+    <!-- Левая часть: список задач -->
+    <div class="tasks">
+        <ul>
+            <li>
+                <h1 ><span th:text="${theory.name}"></span>
+                </h1>
+                <pre>
+                <p> <span th:text="${theory.theory}"></span></p>
+                </pre>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+<script>
+    function list() {
+        window.location.href = '/in/theory';
+    }
+
+    document.querySelector('.logo').addEventListener('click', function() {
+        window.location.href = '/in/main';
+    });
+
+</script>
+</body>
+</html>

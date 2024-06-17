@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Task</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            height: calc(100vh - 45px);
+        }
+
+        header {
+            height: 45px;
+            background-color: #fff;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .logo {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+            }
+
+            .logo h1 {
+                margin: 0;
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile button {
+    background-image: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: 0.5s;
+    background-size: 200% auto;
+            box-shadow: 0 0 20px #eee;
+}
+
+.profile button:hover {
+            background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+}
+
+        .main-content {
+            display: flex;
+            padding: 20px;
+            height: calc(100vh - 45px); /* Высота всего окна минус высота header */
+
+        }
+
+        .tasks {
+            flex: 1;
+            padding-right: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            height: 95vh;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow-y: auto; /* Добавляем прокрутку, если содержимое слишком длинное */
+        }
+
+        .tasks h1 {
+            margin: 0;
+            padding-left: 10px;
+        }
+
+        .tasks p {
+        margin: 0;
+        }
+
+
+        .tasks pre {
+        font-size: 16px;
+        }
+
+        .tasks ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+
+        .tasks li {
+            margin-bottom: 20px;
+        }
+
+        .code-input {
+            flex: 1;
+            background-color: #fff;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            background-color: #f0f0f0;
+
+        }
+
+
+        .code-input form {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding-left: 20px;
+
+
+
+        }
+
+        .code-input button {
+            align-self: flex-end; /* Кнопка будет прижата к нижней части */
+            margin-top: 10px; /* Добавляем небольшой отступ между текстовой областью и кнопкой */
+            background-image: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
+                color: white;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                text-transform: uppercase;
+                display: block;
+                font-size: 16px;
+                cursor: pointer;
+                border: none;
+                border-radius: 4px;
+                transition: 0.5s;
+                background-size: 200% auto;
+                box-shadow: 0 0 20px #eee;
+
+        }
+
+        .code-input button:hover {
+            background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+        }
+
+
+
+        .CodeMirror {
+            height: 400px;
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .answer{
+            padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        margin-top: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        overflow: auto;
+        white-space: pre-wrap;
+        font-size: 16px; /* Устанавливаем размер текста в 16px */
+        height: calc(95vh - 500px); /* Устанавливаем высоту поля автоматически */
+        }
+
+
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999; /* Устанавливаем очень высокий z-index для обеспечения отображения поверх других элементов */
+
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.5);
+        z-index: 9998; /* Z-index ниже, чем у индикатора загрузки, но выше, чем у остального контента */
+        display: none; /* По умолчанию скрываем оверлей */
+
+
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <h1>CodES</h1>
+    </div>
+    <div class="profile">
+        <button onclick="list()">К списку</button>
+    </div>
+</header>
+
+<div class="loading-spinner" id="loadingSpinner" style="display: none;">
+    <div class="spinner"></div>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<div class="main-content">
+
+    <!-- Левая часть: список задач -->
+    <div class="tasks">
+        <ul>
+            <li>
+                <h1 ><span th:text="${task.name}"></span>
+                </h1>
+                <pre>
+                <p> <span th:text="${task.text}"></span></p>
+                </pre>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <!-- Правая часть: ввод кода и кнопка отправки -->
+    <div class="code-input">
+        <form id="codeForm" th:data-testClass="${task.testClass}"> <!-- Добавлен идентификатор формы -->
+            <textarea id="code" name="code" th:text="${task.pattern}">
+            </textarea>
+            <button type="button" onclick="submitCode()">Проверка
+            </button> <!-- Изменено на type="button" -->
+            <div class="answer" id="answer">
+            </div> <!-- Изменено на id="answer" -->
+        </form>
+    </div>
+</div>
+
+<!-- Подключение библиотеки CodeMirror для редактора кода -->
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.0/lib/codemirror.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.0/mode/clike/clike.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.0/addon/hint/show-hint.js"></script>
+<script>
+    function list() {
+        window.location.href = '/in/tasks';
+    }
+
+    document.querySelector('.logo').addEventListener('click', function() {
+        window.location.href = '/in/main';
+    });
+
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,
+        mode: "text/x-java",
+        autoCloseBrackets: true,
+        indentUnit: 4,
+        theme: "default",
+        extraKeys: {
+        "Ctrl-Space": "autocomplete" // Добавляем привязку для активации автодополнения при нажатии на Ctrl + Space
+    }
+    });
+
+    function submitCode() {
+        // Показать индикатор загрузки
+        document.getElementById("loadingSpinner").style.display = "block";
+        // Показать оверлей
+        document.getElementById("overlay").style.display = "block";
+
+        var testClass = document.getElementById("codeForm").getAttribute("data-testClass");
+
+        var code = editor.getValue(); // Получаем введенный код из редактора
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/in/tasks/task/submit?testClass=" + encodeURIComponent(testClass), true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+
+             // Скрыть индикатор загрузки
+            document.getElementById("loadingSpinner").style.display = "none";
+            // Скрыть оверлей
+            document.getElementById("overlay").style.display = "none";
+
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                var result = xhr.responseText;
+                document.getElementById("answer").textContent = result;
+
+            var codeMirrorWrapper = document.querySelector(".CodeMirror");
+             // Установка цвета рамки в зависимости от содержимого ответа
+            if (result.includes("Ошибка выполнения!")) {
+                codeMirrorWrapper.style.borderColor = "#FFCD00";
+                codeMirrorWrapper.style.boxShadow = "0 2px 5px rgba(255, 205, 0, 0.8)";
+            } else
+            if (/Программа\s+реализована\s+не\s+верно/.test(result)) {
+                codeMirrorWrapper.style.borderColor = "red";
+                codeMirrorWrapper.style.boxShadow = "0 2px 5px rgba(255, 0, 0, 0.8)";
+            } else {
+                codeMirrorWrapper.style.borderColor = "#49FF00";
+                codeMirrorWrapper.style.boxShadow = "0 2px 5px rgba(73, 255, 0, 0.8)";
+            }
+
+
+
+            }
+        };
+        xhr.send("code=" + encodeURIComponent(code));
+
+    }
+
+
+</script>
+</body>
+</html>

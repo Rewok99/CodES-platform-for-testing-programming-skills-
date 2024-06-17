@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasks</title>
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+header {
+height: 45px;
+    background-color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .logo {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+
+    .logo h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+
+
+.cards {
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 8px;
+    margin: 0 20px 20px 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    [B]width: 100%;[/B]
+    min-height: 100vh;
+    padding: 20px;
+    border: none;
+    border-radius: 8px;
+
+}
+
+.card {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    cursor: pointer; /* Добавляем курсор указателя при наведении */
+    transition: transform 0.3s; /* Добавляем плавное изменение при наведении */
+}
+
+.card:hover {
+    transform: scale(1.01); /* Увеличиваем размер при наведении */
+}
+
+.card h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card p {
+    margin: 0;
+    font-size: 14px;
+}
+
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <h1>CodES</h1>
+  </div>
+</header>
+<main>
+  <div class="cards">
+    <button class="card" onclick="openTask(1)"> <!-- Передаем идентификатор задачи -->
+      <h2>Задача 1</h2>
+      <p>Сложность: <span style="color: Lime;">Легко</span></p>
+    </button>
+    <button class="card" onclick="openTask(2)"> <!-- Передаем идентификатор задачи -->
+      <h2>Задача 2</h2>
+      <p>Сложность: <span style="color: Lime;">Легко</span></p>
+    </button>
+    <button class="card" onclick="openTask(3)"> <!-- Передаем идентификатор задачи -->
+      <h2>Задача 3</h2>
+      <p>Сложность: <span style="color: DarkGreen;">Легко++</span></p>
+    </button>
+  </div>
+</main>
+<script>
+    function openTask(taskId) {
+        window.location.href = '/in/tasks/task?id=' + taskId; // Передаем идентификатор задачи в URL
+    }
+
+    document.querySelector('.logo').addEventListener('click', function() {
+    window.location.href = '/in/main';
+    });
+
+      // Получаем все карточки
+        const cards = document.querySelectorAll('.card');
+        const lastCard = cards[cards.length - 1];
+        lastCard.style.marginBottom = '0';
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to CodES</title>
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+      height: calc(100vh - 45px);
+    }
+
+    header {
+    height: 45px;
+    background-color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+
+    .logo h1 {
+    margin: 5px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile button {
+    background-image: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: 0.5s;
+    background-size: 200% auto;
+    box-shadow: 0 0 20px #eee;
+}
+
+.profile button:hover {
+            background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+}
+
+
+    .main-content {
+        background: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+      margin: 0 20px 20px 20px;
+      border: none;
+      border-radius: 8px;
+      height: 89vh;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      transition: 0.5s;
+      background-size: 200% auto;
+    }
+
+
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+        }
+
+    @keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.main-content h1 {
+    color: #fff;
+    margin-top: 300px;
+    font-size: 50px;
+    filter: blur(3px);
+    animation: blink 1.5s infinite alternate; /* Применяем анимацию blink */
+}
+    .main-content h2 {
+        color: #fff;
+        margin-top: 300px;
+        font-size: 50px;
+        position: absolute;
+        z-index:100;
+    }
+
+        .wrap {
+          margin-top: 400px;
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index:101;
+        }
+
+        .go-button {
+
+          min-width: 300px;
+          min-height: 60px;
+          font-size: 22px;
+          text-transform: uppercase;
+          letter-spacing: 1.3px;
+          font-weight: 700;
+          color: #313133;
+          background: #fff;
+
+          border: none;
+          border-radius: 1000px;
+          box-shadow: 0px 0px 24px #fff ;
+          transition: all 0.3s ease-in-out 0s;
+          cursor: pointer;
+          outline: none;
+          position: relative;
+          padding: 10px;
+          }
+
+        .go-button::before {
+        content: '';
+          border-radius: 1000px;
+          min-width: calc(300px + 12px);
+          min-height: calc(60px + 12px);
+          border: 6px solid #fff;
+          box-shadow: 0 0 60px #fff;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          transition: all .3s ease-in-out 0s;
+        }
+
+        .go-button:hover, .button:focus {
+          color: #313133;
+          transform: translateY(-6px);
+        }
+
+        .go-button:hover::before, button:focus::before {
+          opacity: 1;
+        }
+
+
+
+  </style>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <h1>CodES</h1>
+    </div>
+    <div class="profile">
+        <button onclick="registration()">Зарегистрироваться</button>
+    </div>
+</header>
+<div class="main-content">
+<h1>Добро пожаловать в CodES!</h1>
+    <h2>Добро пожаловать в CodES!</h2>
+
+    <div class="wrap">
+        <button class="go-button" onclick="login()">Войти</button>
+    </div>
+
+</div>
+
+<script>
+    function login() {
+        window.location.href = '/login';
+    }
+    function registration() {
+        window.location.href = '/in/register';
+    }
+
+</script>
+</body>
+</html>

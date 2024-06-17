@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Login</title>
+  <style>
+        /* Стили из формы регистрации */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-image: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: 0.5s;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            display: block;
+            background-size: 200% auto;
+            box-shadow: 0 0 20px #eee;
+
+        }
+        button:hover {
+            background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        header {
+        height: 45px;
+    background-color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+    </style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <h1>CodES</h1>
+  </div>
+</header>
+<div class="container">
+  <h2>Вход</h2>
+  <form id="loginForm" action="/login" method="post">
+    <label for="username">Логин:</label>
+    <input type="text" id="username" name="username" required>
+    <br>
+    <label for="password">Пароль:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <button id="submit" type="submit">Войти</button>
+  </form>
+
+  <div class="register-link">
+    Еще не зарегистрированы? <a th:href="@{/in/register}">Регистрация</a>.
+  </div>
+  <div class="error-message" id="error-message-thymeleaf" th:if="${param.error}">
+    Неверное имя пользователя или пароль.
+  </div>
+</div>
+
+<script>
+    document.querySelector('.logo').addEventListener('click', function() {
+    window.location.href = '/';
+    });
+
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        if (username === "" || password === "") {
+            alert("Пожалуйста, введите имя пользователя и пароль!");
+            event.preventDefault(); // Prevent form submission
+        } else {
+            // Clear previous error message
+            document.getElementById("error-message").innerText = "";
+        }
+
+
+    });
+</script>
+
+</body>
+</html>

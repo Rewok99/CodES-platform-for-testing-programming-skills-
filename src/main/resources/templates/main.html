@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Page</title>
+  <style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+header {
+height: 45px;
+    background-color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile button {
+    background-image: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: 0.5s;
+    background-size: 200% auto;
+            box-shadow: 0 0 20px #eee;
+}
+
+.profile button:hover {
+            background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+}
+
+.cards {
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 8px;
+    margin: 0 20px 20px 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    [B]width: 100%;[/B]
+    min-height: 100vh;
+    padding: 20px;
+    border: none;
+    border-radius: 8px;
+
+}
+
+
+.card {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    cursor: pointer; /* Добавляем курсор указателя при наведении */
+    transition: transform 0.3s; /* Добавляем плавное изменение при наведении */
+}
+
+.card:hover {
+    transform: scale(1.01); /* Увеличиваем размер при наведении */
+}
+
+.card h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card p {
+    margin: 0;
+    font-size: 14px;
+}
+
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <h1>CodES</h1>
+  </div>
+  <div class="profile">
+    <button onclick="changePassword()">Личный кабинет</button>
+  </div>
+</header>
+<main>
+  <div class="cards">
+    <button class="card" onclick="openTasks()">
+      <h2>Задачи</h2>
+      <p>Решайте различные задачи по программированию!</p>
+    </button>
+    <button class="card" onclick="openTheory()">
+      <h2>Теория</h2>
+      <p>Решения задач, и другое.</p>
+    </button>
+  </div>
+</main>
+<script>
+
+
+    function changePassword() {
+        window.location.href = '/in/change-password';
+    }
+
+    function openTheory() {
+        window.location.href = '/in/theory';
+    }
+
+    function openTasks() {
+        window.location.href = '/in/tasks';
+    }
+
+    const cards = document.querySelectorAll('.card');
+    const lastCard = cards[cards.length - 1];
+    lastCard.style.marginBottom = '0';
+</script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Users</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    header {
+      height: 45px;
+    background-color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+    }
+
+    .profile button {
+      background-image: linear-gradient(to right, #4776E6 0%, #8E54E9  51%, #4776E6  100%);
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      text-transform: uppercase;
+      display: block;
+      font-size: 16px;
+      margin: 5px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      transition: 0.5s;
+      background-size: 200% auto;
+      box-shadow: 0 0 20px #eee;
+    }
+
+    .profile button:hover {
+      background-position: right center;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .main-content {
+      margin: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .search-container {
+      margin-bottom: 20px;
+    }
+
+    .search-container input[type=text] {
+      padding: 10px;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      width: 20%;
+    }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <h1>CodES</h1>
+  </div>
+  <div class="profile">
+    <button onclick="changePassword()">Назад</button>
+  </div>
+</header>
+<main>
+  <div class="main-content">
+    <div class="search-container">
+      <input type="text" id="searchInput" onkeyup="searchUsers()" placeholder="Поиск по ID или имени пользователя...">
+    </div>
+    <h2>Пользователи</h2>
+    <table id="userTable">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Имя пользователя</th>
+        <th>Роль</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.roles}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+</main>
+<script>
+
+  function changePassword() {
+    window.location.href = '/in/change-password';
+  }
+
+  function searchUsers() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("userTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      tdId = tr[i].getElementsByTagName("td")[0];
+      tdName = tr[i].getElementsByTagName("td")[1];
+      if (tdId || tdName) {
+        txtValueId = tdId.textContent || tdId.innerText;
+        txtValueName = tdName.textContent || tdName.innerText;
+        if (txtValueId.toUpperCase().indexOf(filter) > -1 || txtValueName.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+</body>
+</html>
